@@ -40,9 +40,6 @@ app = Flask(__name__)
 # Flask Routes
 #################################################
 
-# Start date definition for the last year of data
-date = "2016-08-23"
-
 # Landing page definition and list of available routes
 @app.route("/")
 def welcome():
@@ -59,6 +56,7 @@ def welcome():
 @app.route("/api/v1.0/precipitation")
 def precipitation():
     print("Server received request for Precipitation Data")
+    date = "2016-08-23"
     query = session.query(Measurement.date, Measurement.prcp).filter(Measurement.date >= date).all()
     precipitation_data = []
     for date, prcp in query:
@@ -87,6 +85,7 @@ def stations():
 @app.route("/api/v1.0/tobs")
 def tobs():
     print("Server received request for Temperatures of the most active Station")
+    date = "2016-08-23"
     most_active_station = "USC00519281"
     query = session.query(Measurement.date, Measurement.tobs).filter(Measurement.date >= date).filter(Measurement.station == most_active_station).all()
     temp_data = []
